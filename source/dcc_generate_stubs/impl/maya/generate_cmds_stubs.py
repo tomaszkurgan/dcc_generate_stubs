@@ -37,7 +37,7 @@ def get_command_properties(document):
     """Looking for <cmd> is (NOT) undoable, (NOT) queryable, and (NOT) editable."""
     anchor = document.find('p', {'id': 'synopsis'})  # type: bs4.element.Tag
     if not anchor:
-        return ''
+        return {}
 
     property_line = anchor.next_sibling.next_sibling.text
     property_line = utils.strip_empty_lines(property_line)
@@ -157,7 +157,8 @@ def compose_python_function_def(command_name, command_properties, command_flags,
 
     description_repr = ''
     if feature_mask & DESC:
-        description_repr = '%s is %s' % (command_name, ('NOT ' if command_properties['undoable'] else '') + 'undoable')
+        description_repr = '%s is %s' % (command_name,
+                                         ('NOT ' if command_properties.get('undoable', False) else '') + 'undoable')
 
     flags_repr = None
     if feature_mask & FLAG:
