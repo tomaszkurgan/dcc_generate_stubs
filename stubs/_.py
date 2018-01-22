@@ -8,3 +8,8 @@ cmds.addMetadata()
 cmds.setKeyframe()
 cmds.ls()
 
+cmds.select()
+
+
+import test
+test.addAttr()
